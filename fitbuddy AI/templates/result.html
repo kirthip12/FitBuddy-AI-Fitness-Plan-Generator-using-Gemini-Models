@@ -1,0 +1,273 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<link rel="stylesheet" href="/static/css/style.css">
+
+<section class="card">
+
+
+    <div class="result-header">
+
+
+        <div>
+
+            <span class="eyebrow">
+                YOUR FITBUDDY PLAN
+            </span>
+
+
+            <h1>
+                {{ user.name }}
+            </h1>
+
+
+            <p>
+
+                {{ user.goal|title }}
+
+                ·
+
+                {{ user.intensity|title }}
+                intensity
+
+                ·
+
+                {{ user.experience_level|title }}
+
+            </p>
+
+        </div>
+
+
+        <span class="badge">
+
+            {{ mode }} mode
+
+        </span>
+
+
+    </div>
+
+
+
+    {% if message %}
+
+    <div class="success">
+
+        {{ message }}
+
+    </div>
+
+    {% endif %}
+
+
+
+    <div class="profile-grid">
+
+
+        <div>
+
+            <strong>
+                User ID
+            </strong>
+
+            <span>
+                {{ user.user_id }}
+            </span>
+
+        </div>
+
+
+
+        <div>
+
+            <strong>
+                Age
+            </strong>
+
+            <span>
+                {{ user.age }}
+            </span>
+
+        </div>
+
+
+
+        <div>
+
+            <strong>
+                Weight
+            </strong>
+
+            <span>
+                {{ user.weight }} kg
+            </span>
+
+        </div>
+
+
+
+        <div>
+
+            <strong>
+                Goal
+            </strong>
+
+            <span>
+                {{ user.goal|title }}
+            </span>
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<section class="card">
+
+
+    <h2>
+        🏋️ 7-Day Workout Plan
+    </h2>
+
+
+    <pre class="plan">{{ workout_plan }}</pre>
+
+
+</section>
+
+
+
+<section class="card tip-card">
+
+
+    <h2>
+        🥗 Nutrition / Recovery Tip
+    </h2>
+
+
+    <p>
+        {{ nutrition_tip }}
+    </p>
+
+
+</section>
+
+
+
+<section class="card">
+
+
+    <h2>
+        🔄 Improve This Plan
+    </h2>
+
+
+    <p>
+
+        Tell FitBuddy what you want to change.
+
+        Example:
+
+        "Add more cardio and one extra rest day."
+
+    </p>
+
+
+
+    <form
+        method="post"
+        action="/submit-feedback"
+    >
+
+
+        <input
+            type="hidden"
+            name="user_id"
+            value="{{ user.user_id }}"
+        >
+
+
+        <label>
+
+            Feedback
+
+            <textarea
+                name="feedback"
+                rows="5"
+                minlength="5"
+                maxlength="2000"
+                placeholder="Example: Add more cardio and make Day 3 a rest day."
+                required
+            ></textarea>
+
+        </label>
+
+
+        <button
+            class="button"
+            type="submit"
+        >
+
+            Update Plan
+
+        </button>
+
+
+    </form>
+
+
+</section>
+
+
+
+{% if plan.updated_plan %}
+
+
+<section class="card">
+
+
+    <h2>
+        Previous Updated Plan
+    </h2>
+
+
+    <pre class="plan">
+{{ plan.updated_plan }}
+    </pre>
+
+
+    <p class="muted">
+
+        <strong>
+            Feedback:
+        </strong>
+
+        {{ plan.feedback }}
+
+    </p>
+
+
+</section>
+
+
+{% endif %}
+
+
+
+<a
+    class="secondary-button"
+    href="/"
+>
+
+    ← Create Another Plan
+
+</a>
+
+
+{% endblock %}

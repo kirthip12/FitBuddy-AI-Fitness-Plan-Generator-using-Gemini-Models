@@ -1,0 +1,227 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<link rel="stylesheet" href="/static/css/style.css">
+
+
+<section class="card">
+
+
+    <div class="result-header">
+
+
+        <div>
+
+            <span class="eyebrow">
+                ADMIN / COACH VIEW
+            </span>
+
+
+            <h1>
+                All Users
+            </h1>
+
+
+            <p>
+                View stored user profiles and
+                generated workout plans.
+            </p>
+
+        </div>
+
+
+        <span class="badge">
+
+            {{ users|length }} users
+
+        </span>
+
+
+    </div>
+
+
+</section>
+
+
+
+{% if users %}
+
+
+{% for user in users %}
+
+
+<section class="card admin-user">
+
+
+    <div class="profile-grid">
+
+
+        <div>
+
+            <strong>
+                Name
+            </strong>
+
+            <span>
+                {{ user.name }}
+            </span>
+
+        </div>
+
+
+
+        <div>
+
+            <strong>
+                User ID
+            </strong>
+
+            <span>
+                {{ user.user_id }}
+            </span>
+
+        </div>
+
+
+
+        <div>
+
+            <strong>
+                Age
+            </strong>
+
+            <span>
+                {{ user.age }}
+            </span>
+
+        </div>
+
+
+
+        <div>
+
+            <strong>
+                Weight
+            </strong>
+
+            <span>
+                {{ user.weight }} kg
+            </span>
+
+        </div>
+
+
+
+        <div>
+
+            <strong>
+                Goal
+            </strong>
+
+            <span>
+                {{ user.goal|title }}
+            </span>
+
+        </div>
+
+
+
+        <div>
+
+            <strong>
+                Intensity
+            </strong>
+
+            <span>
+                {{ user.intensity|title }}
+            </span>
+
+        </div>
+
+
+    </div>
+
+
+
+    {% set plan = plans.get(user.user_id) %}
+
+
+    {% if plan %}
+
+
+    <h3>
+        Original Plan
+    </h3>
+
+
+    <pre class="plan compact">
+{{ plan.original_plan }}
+    </pre>
+
+
+
+    {% if plan.updated_plan %}
+
+
+    <h3>
+        Updated Plan
+    </h3>
+
+
+    <pre class="plan compact">
+{{ plan.updated_plan }}
+    </pre>
+
+
+    <p class="muted">
+
+        <strong>
+            Feedback:
+        </strong>
+
+        {{ plan.feedback }}
+
+    </p>
+
+
+    {% endif %}
+
+
+    {% else %}
+
+
+    <p>
+        No workout plan stored.
+    </p>
+
+
+    {% endif %}
+
+
+</section>
+
+
+{% endfor %}
+
+
+{% else %}
+
+
+<section class="card empty">
+
+    <h2>
+        No Users Yet
+    </h2>
+
+    <p>
+        Create a workout plan from the home page.
+    </p>
+
+</section>
+
+
+{% endif %}
+
+
+{% endblock %}
